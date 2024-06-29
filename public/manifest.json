@@ -1,0 +1,9 @@
+{
+  "short_name": "Smart Tic-Tac-Toe",
+  "name": "Play Tic-Tac-Toe On Bitcoin",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
