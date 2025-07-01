@@ -1,0 +1,117 @@
+pragma cashscript ~0.11.0;
+
+// simple tic-tac-toe
+// v0.0
+contract TicTacToe(pubkey xPub, pubkey oPub) 
+{
+    // if timeout, allow withdraw to end game and withdraw UTXOs
+    // goes to last player that played or return to both if start of game
+    // maybe super super old UTXO can withdraw no matter what? (bad encoding, low value and no tokens)
+    function timeout() {
+        require(this.age >= 4320); // a month old UTXO can be freely spent
+    }
+    
+    // x goes first
+    // check for player signature, EOG, legal move
+    // validate updated state
+    //
+    // UTXO_0 Contains the wager
+    // UTXO_1 Contains the game state NFT
+    function play(sig playerSig) {
+        // Verify spending UTXO_0 and UTXO_1
+        require(tx.inputs.length == 2);
+        require(tx.inputs[0].outpointTransactionHash == tx.inputs[1].outpointTransactionHash);
+        require(tx.inputs[1].nftCommitment != 0x);
+        require(tx.inputs[1].nftCommitment.length == 4);
+
+        // Validate new UTXO_1
+        require(tx.outputs[0].tokenCategory == tx.inputs[0].tokenCategory); // TODO: Mutable NFTs?
+
+        byte turn, bytes3 currBoard = bytes4(tx.inputs[1].nftCommitment).split(1);
+
+        if(turn == 0x00 || turn == 0x01) {
+            require(tx.outputs.length == 2);
+            require(tx.outputs[0].lockingBytecode == tx.inputs[0].lockingBytecode);
+            require(tx.outputs[0].value >= tx.inputs[0].value - 2000 sats);
+
+            byte nextTurn, bytes3 nextBoard = bytes4(tx.outputs[1].nftCommitment).split(1);
+
+            require((nextBoard & 0x300000) != 0x300000);
+            require((nextBoard & 0x0C0000) != 0x0C0000);
+            require((nextBoard & 0x030000) != 0x030000);
+            require((nextBoard & 0x003000) != 0x003000);
+            require((nextBoard & 0x000C00) != 0x000C00);
+            require((nextBoard & 0x000300) != 0x000300);
+            require((nextBoard & 0x000030) != 0x000030);
+            require((nextBoard & 0x00000C) != 0x00000C);
+            require((nextBoard & 0x000003) != 0x000003);
+
+            bytes3 diffBoard = currBoard ^ nextBoard;
+
+            if(turn == 0x00) {
+                require(checkSig(playerSig, xPub));
+
+                bytes3 illegalMoves = diffBoard & 0xEAEAEA;
+                require(illegalMoves == 0x000000);
+
+                bool singleMove =
+                    diffBoard == 0x010000 || diffBoard == 0x040000 || diffBoard == 0x100000 ||
+                    diffBoard == 0x000100 || diffBoard == 0x000400 || diffBoard == 0x001000 ||
+                    diffBoard == 0x000001 || diffBoard == 0x000004 || diffBoard == 0x000010;
+                require(singleMove);
+
+                bool hWin = ((nextBoard & 0x150000) == 0x150000) || ((nextBoard & 0x001500) == 0x001500) || ((nextBoard & 0x000015) == 0x000015);
+                bool vWin = ((nextBoard & 0x101010) == 0x101010) || ((nextBoard & 0x040404) == 0x040404) || ((nextBoard & 0x010101) == 0x010101);
+                bool dWin = ((nextBoard & 0x100401) == 0x100401) || ((nextBoard & 0x010410) == 0x010410);
+
+                if(hWin || vWin || dWin) {
+                    require(nextTurn == 0x02);
+                }
+            } else {
+                require(checkSig(playerSig, oPub));
+
+                bytes3 illegalMoves = diffBoard & 0xD5D5D5;
+                require(illegalMoves == 0x000000);
+
+                bool singleMove =
+                    diffBoard == 0x020000 || diffBoard == 0x080000 || diffBoard == 0x200000 ||
+                    diffBoard == 0x000200 || diffBoard == 0x000800 || diffBoard == 0x002000 ||
+                    diffBoard == 0x000002 || diffBoard == 0x000008 || diffBoard == 0x000020;
+                require(singleMove);
+
+                bool hWin = ((nextBoard & 0x2A0000) == 0x2A0000) || ((nextBoard & 0x002A00) == 0x002A00) || ((nextBoard & 0x00002A) == 0x00002A);
+                bool vWin = ((nextBoard & 0x202020) == 0x202020) || ((nextBoard & 0x080808) == 0x080808) || ((nextBoard & 0x020202) == 0x020202);
+                bool dWin = ((nextBoard & 0x200802) == 0x200802) || ((nextBoard & 0x020820) == 0x020820);
+
+                if(hWin || vWin || dWin) {
+                    require(nextTurn == 0x03);
+                }
+            }
+
+            bool catGame =
+                ((nextBoard & 0x300000) != 0x000000) && ((nextBoard & 0x0C0000) != 0x000000) && ((nextBoard & 0x030000) != 0x000000) &&
+                ((nextBoard & 0x003000) == 0x000000) && ((nextBoard & 0x000C00) != 0x000000) && ((nextBoard & 0x000300) != 0x000000) &&
+                ((nextBoard & 0x000030) == 0x000000) && ((nextBoard & 0x00000C) != 0x000000) && ((nextBoard & 0x000003) != 0x000000);
+
+            if(catGame) {
+                require(nextTurn == 0x04);
+            }
+        } else if(turn == 0x02 || turn == 0x03) { // pay out
+            require(tx.outputs.length == 1);
+            require(tx.outputs[0].value >= tx.inputs[0].value + tx.inputs[1].value - 2000 sats);
+            require(tx.outputs[0].tokenCategory == tx.inputs[0].tokenCategory);
+            require(tx.outputs[0].tokenAmount == tx.inputs[0].tokenAmount);
+            require(tx.outputs[0].nftCommitment == tx.inputs[0].nftCommitment);
+
+            if(turn == 0x02) {
+                bytes25 xBytecode = new LockingBytecodeP2PKH(hash160(xPub));
+                require(tx.outputs[0].lockingBytecode == xBytecode);
+            } else {
+                bytes25 oBytecode = new LockingBytecodeP2PKH(hash160(oPub));
+                require(tx.outputs[0].lockingBytecode == oBytecode);
+            }            
+        } else if(turn == 0x04) { // cat game
+            require(tx.outputs.length == 2);
+        }
+    }
+}

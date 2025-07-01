@@ -1174,6 +1174,23 @@
   resolved "https://registry.yarnpkg.com/@bitauth/libauth/-/libauth-2.1.0.tgz#e618706092fe9ea5e4103a2cf427cd5ae5287e1e"
   integrity sha512-O0cIN7/UPUHg6gaWHuePXIYRkvNPrc3zHfi80guZkkO4Ke9nSaN5mSITqhC5lKFBwAakr6OSToClXHN/IxiOfA==
 
+"@bitauth/libauth@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@bitauth/libauth/-/libauth-3.0.0.tgz#d88535fc5353d5ecd11db96d9a229e11c06a43d2"
+  integrity sha512-3yoL31XpnhAnf5nDVMFk4xPqebxDwXrgYAwpa31ARJnV5A/eXWlpNYvCd6FTZPFM4VvKfjCBi+jRCrw1hOZ0Jg==
+
+"@bitauth/libauth@^3.1.0-next.2":
+  version "3.1.0-next.6"
+  resolved "https://registry.yarnpkg.com/@bitauth/libauth/-/libauth-3.1.0-next.6.tgz#2826db0abeda022b1c5bdfb247a408710a9d3ead"
+  integrity sha512-FJ4ZChczVx779T6yElNGV1pWuyN4+mwF7P6ro+eFt5g6GPKqJe4S7YYBJySRGyER2CvTVnmx0gArzSbp/2u3oA==
+
+"@cashscript/utils@^0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@cashscript/utils/-/utils-0.11.0.tgz#6c767afdb9f1c439dfc850f77870f93a3b9d00c7"
+  integrity sha512-kx1LS7xnczU7g2gAf2mDmybUXTIE59okRGknmVEyb3vkND2r/cPdhWRBzFl1woyYVJ1ce7WeggUfoy1NGgOW2A==
+  dependencies:
+    "@bitauth/libauth" "^3.1.0-next.2"
+
 "@cashscript/utils@^0.9.3":
   version "0.9.3"
   resolved "https://registry.yarnpkg.com/@cashscript/utils/-/utils-0.9.3.tgz#05495146ecce5211ba26ab9ab59cca3bf1a5a4c2"
@@ -2706,10 +2723,10 @@ ansi-styles@^6.1.0:
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-6.2.1.tgz#0e62320cf99c21afff3b3012192546aacbfb05c5"
   integrity sha512-bN798gFfQX+viw3R7yrGWRqnrN2oRkEkUjjl4JNn4E8GxxbjtG3FbrEIIY3l8/hrwUwIeCZvi4QuOTP4MErVug==
 
-antlr4@^4.13.1-patch-1:
-  version "4.13.1-patch-1"
-  resolved "https://registry.yarnpkg.com/antlr4/-/antlr4-4.13.1-patch-1.tgz#946176f863f890964a050c4f18c47fd6f7e57602"
-  integrity sha512-OjFLWWLzDMV9rdFhpvroCWR4ooktNg9/nvVYSA5z28wuVpU36QUNuioR1XLnQtcjVlf8npjyz593PxnU/f/Cow==
+antlr4@^4.13.2:
+  version "4.13.2"
+  resolved "https://registry.yarnpkg.com/antlr4/-/antlr4-4.13.2.tgz#0d084ad0e32620482a9c3a0e2470c02e72e4006d"
+  integrity sha512-QiVbZhyy4xAZ17UPEuG3YTOt8ZaoeOR1CvEAqrEsDBsOqINslaB147i9xqljZqoyf5S+EUlGStaj+t22LT9MOg==
 
 any-promise@^1.0.0:
   version "1.3.0"
@@ -3283,16 +3300,16 @@ case-sensitive-paths-webpack-plugin@^2.4.0:
   resolved "https://registry.yarnpkg.com/case-sensitive-paths-webpack-plugin/-/case-sensitive-paths-webpack-plugin-2.4.0.tgz#db64066c6422eed2e08cc14b986ca43796dbc6d4"
   integrity sha512-roIFONhcxog0JSSWbvVAh3OocukmSgpqOH6YpMkCvav/ySIV3JKg4Dc8vYtQjYi/UxpNE36r/9v+VqTQqgkYmw==
 
-cashc@^0.9.3:
-  version "0.9.3"
-  resolved "https://registry.yarnpkg.com/cashc/-/cashc-0.9.3.tgz#ba2facc9d77200034923414ab4e08e7db771a4f6"
-  integrity sha512-z3wz5UpaPrpehIoqcoOU419FcGUy/nzMJ7x9k5BJqlU8V6Kh0vytPPetudnAFSWKdiuvUJ5oIZJAeXUaDHpf0g==
+cashc@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/cashc/-/cashc-0.11.0.tgz#9d84769fad9b0da4bbd08b483fd5a2a818147821"
+  integrity sha512-UbjGMQAoKKRM3NnxSMVVO+UUyUea1FWnm1evZ9xoxBiTM6Bl07rL3tyrnbLtliWwTbw8TorhLMuvOl2lgJbiyg==
   dependencies:
-    "@bitauth/libauth" "^2.0.0-alpha.8"
-    "@cashscript/utils" "^0.9.3"
-    antlr4 "^4.13.1-patch-1"
-    commander "^7.1.0"
-    semver "^7.3.4"
+    "@bitauth/libauth" "^3.1.0-next.2"
+    "@cashscript/utils" "^0.11.0"
+    antlr4 "^4.13.2"
+    commander "^13.1.0"
+    semver "^7.6.3"
 
 cashscript@^0.9.3:
   version "0.9.3"
@@ -3458,6 +3475,11 @@ combined-stream@^1.0.8:
   dependencies:
     delayed-stream "~1.0.0"
 
+commander@^13.1.0:
+  version "13.1.0"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-13.1.0.tgz#776167db68c78f38dcce1f9b8d7b8b9a488abf46"
+  integrity sha512-/rFeCpNJQbhSZjGVwO9RFV3xPqbnERS8MmIQzCtD/zl6gpJuV/bMLuN92oG3F7d8oDEHHRrujSXNUr8fpjntKw==
+
 commander@^2.20.0:
   version "2.20.3"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
@@ -3468,7 +3490,7 @@ commander@^4.0.0:
   resolved "https://registry.yarnpkg.com/commander/-/commander-4.1.1.tgz#9fd602bd936294e9e9ef46a3f4d6964044b18068"
   integrity sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==
 
-commander@^7.1.0, commander@^7.2.0:
+commander@^7.2.0:
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-7.2.0.tgz#a36cb57d0b501ce108e4d20559a150a391d97ab7"
   integrity sha512-QrWXB+ZQSVPmIWIhtEO9H+gwHaMGYiF5ChvoJ+K9ZGHG/sVsa6yiesAD1GC/x46sET00Xlwo1u49RVVVzvcSkw==
@@ -8597,10 +8619,15 @@ semver@^6.0.0, semver@^6.3.0, semver@^6.3.1:
   resolved "https://registry.yarnpkg.com/semver/-/semver-6.3.1.tgz#556d2ef8689146e46dcea4bfdd095f3434dffcb4"
   integrity sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==
 
-semver@^7.3.2, semver@^7.3.4, semver@^7.3.5, semver@^7.3.7, semver@^7.5.3, semver@^7.5.4:
+semver@^7.3.2, semver@^7.3.5, semver@^7.3.7, semver@^7.5.3, semver@^7.5.4:
   version "7.6.2"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.6.2.tgz#1e3b34759f896e8f14d6134732ce798aeb0c6e13"
   integrity sha512-FNAIBWCx9qcRhoHcgcJ0gvU7SN1lYU2ZXuSfl04bSC5OpvDHFyJCjdNHomPXxjQlCBU67YW64PzY7/VIEH7F2w==
+
+semver@^7.6.3:
+  version "7.7.2"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-7.7.2.tgz#67d99fdcd35cec21e6f8b87a7fd515a33f982b58"
+  integrity sha512-RF0Fw+rO5AMf9MAyaRXI4AV0Ulj5lMHqVxxdSgiVbixSCXoEmmX/jk0CuJw4+3SqroYO9VoUh+HcuJivvtJemA==
 
 send@0.18.0:
   version "0.18.0"
