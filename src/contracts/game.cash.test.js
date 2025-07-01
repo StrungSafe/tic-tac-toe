@@ -1,14 +1,13 @@
-import { compileFile } from 'cashc';
 import { Contract, MockNetworkProvider } from 'cashscript';
 import {
     generatePrivateKey,
     instantiateSecp256k1,
-    instantiateRipemd160,
-    instantiateSha256,
-    decodePrivateKeyWif,
     binToHex,
-    encodeCashAddress,
 } from '@bitauth/libauth';
+
+import gameArtifact from '../artifacts/game.artifact.js'
+
+import 'cashscript/jest';
 
 const secp256k1 = await instantiateSecp256k1();
 
